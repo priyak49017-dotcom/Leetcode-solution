@@ -16,37 +16,55 @@
 
 
 class Solution {
-    List<Integer> previous = new ArrayList<>();
-
     public boolean isEvenOddTree(TreeNode root) {
-        return dfs(root, 0);
-    }
 
-    private boolean dfs(TreeNode node, int level) {
-        if (node == null) return true;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
 
-        int value = node.val;
+        int level = 0;
 
-        // Check correct odd/even value
-        if (level % 2 == 0 && value % 2 == 0) return false;
-        if (level % 2 == 1 && value % 2 != 0) return false;
+        while (!q.isEmpty()) {
 
-        // First node at this level
-        if (level == previous.size()) {
-            previous.add(value);
-        } else {
-            int prev = previous.get(level);
+            int size = q.size();
+            int prev;
 
-            // Even level: increasing
-            if (level % 2 == 0 && value <= prev) return false;
+            if (level % 2 == 0) {
+                prev = Integer.MIN_VALUE;
+            } else {
+                prev = Integer.MAX_VALUE;
+            }
 
-            // Odd level: decreasing
-            if (level % 2 == 1 && value >= prev) return false;
+            for (int i = 0; i < size; i++) {
 
-            previous.set(level, value);
+                TreeNode cur = q.remove();
+
+                if (level % 2 == 0) {
+
+                    if (cur.val % 2 == 0 || cur.val <= prev) {
+                        return false;
+                    }
+
+                } else {
+
+                    if (cur.val % 2 != 0 || cur.val >= prev) {
+                        return false;
+                    }
+                }
+
+                prev = cur.val;
+
+                if (cur.left != null) {
+                    q.add(cur.left);
+                }
+
+                if (cur.right != null) {
+                    q.add(cur.right);
+                }
+            }
+
+            level++;
         }
 
-        return dfs(node.left, level + 1)
-            && dfs(node.right, level + 1);
+        return true;
     }
 }
