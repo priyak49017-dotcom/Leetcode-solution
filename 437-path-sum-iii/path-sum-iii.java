@@ -20,9 +20,7 @@ class Solution {
             return 0;
         }
 
-        return solve(root, tar, 0)
-             + pathSum(root.left, tar)
-             + pathSum(root.right, tar);
+        return solve(root, tar, 0)+ pathSum(root.left, tar)+ pathSum(root.right, tar);
     }
 
     public int solve(TreeNode root, int tar, long sum) {
