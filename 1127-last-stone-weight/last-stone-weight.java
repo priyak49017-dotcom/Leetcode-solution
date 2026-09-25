@@ -11,6 +11,7 @@ class Solution {
             if(first != second){
                 heap.add((first-second));
             }
+        
             if(heap.size() == 0){
                 return 0;
             }
