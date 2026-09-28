@@ -28,11 +28,11 @@ class Solution {
             int levelMax = Integer.MIN_VALUE;
 
             for (int i = 0; i < size; i++) {
-                TreeNode node = queue.poll();
-                levelMax = Math.max(levelMax, node.val);
+                TreeNode curr = queue.poll();
+                levelMax = Math.max(levelMax, curr.val);
 
-                if (node.left != null) queue.offer(node.left);
-                if (node.right != null) queue.offer(node.right);
+                if (curr.left != null) queue.offer(curr.left);
+                if (curr.right != null) queue.offer(curr.right);
             }
 
             result.add(levelMax);
