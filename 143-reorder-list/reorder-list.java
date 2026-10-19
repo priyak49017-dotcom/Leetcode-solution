@@ -1,38 +1,43 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
+
 class Solution {
     public void reorderList(ListNode head) {
-        ListNode slow=head;
-        ListNode fast=head;
-        while(fast != null && fast.next != null){
-            slow=slow.next;
-            fast=fast.next.next;
+        if (head == null || head.next == null)
+            return;
+
+        // Step 1: Find middle
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
-        ListNode prev=null;
-        ListNode curr=slow;
-        while(curr != null){
-            ListNode safe=curr.next;
-            curr.next=prev;
-            prev=curr;
-            curr=safe;
+
+        // Step 2: Reverse second half
+        ListNode curr = slow.next;
+        slow.next = null;
+        ListNode prev = null;
+
+        while (curr != null) {
+            ListNode safe = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = safe;
         }
-        ListNode start=head;
-        ListNode end=prev;
-        while(end.next != null){
-            ListNode safe_start=start.next;
-            ListNode safe_end=end.next;
-            start.next=end;
-            start=safe_start;
-            end.next=safe_start;
-            end=safe_end;
+
+        // Step 3: Merge both halves
+        ListNode start = head;
+        ListNode end = prev;
+
+        while (end != null) {
+            ListNode safeStart = start.next;
+            ListNode safeEnd = end.next;
+
+            start.next = end;
+            end.next = safeStart;
+
+            start = safeStart;
+            end = safeEnd;
         }
     }
 }
