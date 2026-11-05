@@ -18,21 +18,21 @@ class Solution {
         if(head == null){
             return head;
         }
-        HashMap<Node , Node> map = new HashMap<>();
-        Node cur = head;
-        while(cur != null){
-            map.put(cur , new Node(cur.val));
-            cur = cur.next;
-        }
+        Node curr=head;
+        HashMap<Node,Node>map=new HashMap<>();
+        while(curr != null){
+            map.put(curr,new Node(curr.val));
+            curr=curr.next;
 
-        cur = head;
-        while(cur != null){
-            Node copy = map.get(cur);
-            copy.next = map.get(cur.next);
-            copy.random = map.get(cur.random);
-            cur = cur.next;
+
         }
-        
+        curr=head;
+        while(curr != null){
+            Node copy=map.get(curr);
+            copy.next=map.get(curr.next);
+            copy.random=map.get(curr.random);
+            curr=curr.next;
+        }
         return map.get(head);
     }
 }
